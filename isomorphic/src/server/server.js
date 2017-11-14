@@ -14,7 +14,7 @@ import routeBank from '../shared/routes/routes';
 
 app.use('/dist', express.static('./dist'));
 
-app.get('*', async (req, res) => {
+app.get('*', async(req, res){
 	try {
 		//create new redux store on each request
 		const store = createStore(reducers, {}, applyMiddleware(thunk));
