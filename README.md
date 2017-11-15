@@ -58,9 +58,12 @@ Git repo for learning reactjs
 
 - Code folders:
    - expressjs4
+   - expressjs4-pug
 
 ## NodeJS practices
 
 - References:
    - [https://scotch.io/tutorials/authenticate-a-node-js-api-with-json-web-tokens](https://scotch.io/tutorials/authenticate-a-node-js-api-with-json-web-tokens)
+   - [https://medium.com/@pandeysoni/user-authentication-using-jwt-json-web-token-in-node-js-using-express-framework-543151a38ea1](https://medium.com/@pandeysoni/user-authentication-using-jwt-json-web-token-in-node-js-using-express-framework-543151a38ea1)
+
 
