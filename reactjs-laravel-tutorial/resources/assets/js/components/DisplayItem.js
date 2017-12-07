@@ -8,22 +8,40 @@ import TableRow from './TableRow';
 class DisplayItem extends Component {
   constructor(props) {
        super(props);
-       this.state = {value: '', items: ''};
+       this.state = {value: '', items: '', hasDeleted: false};
+
+       // Need to bind the function
+       this.updateHasDeleted = this.updateHasDeleted.bind(this);
+       this.tabRow = this.tabRow.bind(this);
      }
       componentDidMount(){
         axios.get('http://localhost:8000/items')
           .then(response => {
-            this.setState({ items: response.data });
+            this.setState({ items: response.data, hasDeleted: false });
           })
           .catch(function (error) {
             console.log(error);
         })
       }
+      updateHasDeleted(){
+        this.setState({ hasDeleted: true });
+
+        axios.get('http://localhost:8000/items')
+          .then(response => {
+            this.setState({ items: response.data, hasDeleted: false });
+          })
+          .catch(function (error) {
+            console.log(error);
+        })
+
+        console.log(this.state);
+      }
       tabRow(){
        if(this.state.items instanceof Array){
+         const deleteCallback = this.updateHasDeleted;
          return this.state.items.map(function(object, i){
-              console.log(object);
-              return <TableRow obj={object} key={object.id} />;
+            //console.log(object);
+            return <TableRow obj={object} key={object.id} deleteCallback={deleteCallback} />;
          })
        }
       }

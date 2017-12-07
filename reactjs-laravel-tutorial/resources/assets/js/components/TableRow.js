@@ -11,11 +11,11 @@ class TableRow extends Component {
   handleSubmit(event) {
     event.preventDefault();
 
-    const self = this;
     let uri = `http://localhost:8000/items/${this.props.obj.id}`;
-
     axios.delete(uri)
     .then((res) => {
+      //console.log(this.props.deleteCallback);
+      this.props.deleteCallback();
       browserHistory.push('/display-item');
     });
   }

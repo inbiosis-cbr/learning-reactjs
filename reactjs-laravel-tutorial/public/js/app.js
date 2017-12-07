@@ -60988,7 +60988,11 @@ var DisplayItem = function (_Component) {
 
     var _this = __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_possibleConstructorReturn___default()(this, (DisplayItem.__proto__ || Object.getPrototypeOf(DisplayItem)).call(this, props));
 
-    _this.state = { value: '', items: '' };
+    _this.state = { value: '', items: '', hasDeleted: false };
+
+    // Need to bind the function
+    _this.updateHasDeleted = _this.updateHasDeleted.bind(_this);
+    _this.tabRow = _this.tabRow.bind(_this);
     return _this;
   }
 
@@ -60998,18 +61002,34 @@ var DisplayItem = function (_Component) {
       var _this2 = this;
 
       __WEBPACK_IMPORTED_MODULE_5_axios___default.a.get('http://localhost:8000/items').then(function (response) {
-        _this2.setState({ items: response.data });
+        _this2.setState({ items: response.data, hasDeleted: false });
       }).catch(function (error) {
         console.log(error);
       });
     }
   }, {
+    key: 'updateHasDeleted',
+    value: function updateHasDeleted() {
+      var _this3 = this;
+
+      this.setState({ hasDeleted: true });
+
+      __WEBPACK_IMPORTED_MODULE_5_axios___default.a.get('http://localhost:8000/items').then(function (response) {
+        _this3.setState({ items: response.data, hasDeleted: false });
+      }).catch(function (error) {
+        console.log(error);
+      });
+
+      console.log(this.state);
+    }
+  }, {
     key: 'tabRow',
     value: function tabRow() {
       if (this.state.items instanceof Array) {
+        var deleteCallback = this.updateHasDeleted;
         return this.state.items.map(function (object, i) {
-          console.log(object);
-          return __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_7__TableRow__["a" /* default */], { obj: object, key: object.id });
+          //console.log(object);
+          return __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_7__TableRow__["a" /* default */], { obj: object, key: object.id, deleteCallback: deleteCallback });
         });
       }
     }
@@ -61126,12 +61146,14 @@ var TableRow = function (_Component) {
   __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_createClass___default()(TableRow, [{
     key: 'handleSubmit',
     value: function handleSubmit(event) {
+      var _this2 = this;
+
       event.preventDefault();
 
-      var self = this;
       var uri = 'http://localhost:8000/items/' + this.props.obj.id;
-
       axios.delete(uri).then(function (res) {
+        //console.log(this.props.deleteCallback);
+        _this2.props.deleteCallback();
         __WEBPACK_IMPORTED_MODULE_5_react_router__["browserHistory"].push('/display-item');
       });
     }
