@@ -60770,17 +60770,17 @@ var Master = function (_Component) {
                 null,
                 __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(
                   __WEBPACK_IMPORTED_MODULE_5_react_router__["Link"],
-                  { to: "add-item" },
-                  'Create Item'
+                  { to: "display-item" },
+                  'List Item'
                 )
               ),
               __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(
                 'li',
                 null,
                 __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(
-                  'a',
-                  { href: '#' },
-                  'Page 2'
+                  __WEBPACK_IMPORTED_MODULE_5_react_router__["Link"],
+                  { to: "add-item" },
+                  'Create Item'
                 )
               ),
               __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(
@@ -61008,7 +61008,8 @@ var DisplayItem = function (_Component) {
     value: function tabRow() {
       if (this.state.items instanceof Array) {
         return this.state.items.map(function (object, i) {
-          return __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_7__TableRow__["a" /* default */], { obj: object, key: i });
+          console.log(object);
+          return __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_7__TableRow__["a" /* default */], { obj: object, key: object.id });
         });
       }
     }
@@ -61113,13 +61114,28 @@ var DisplayItem = function (_Component) {
 var TableRow = function (_Component) {
   __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_inherits___default()(TableRow, _Component);
 
-  function TableRow() {
+  function TableRow(props) {
     __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_classCallCheck___default()(this, TableRow);
 
-    return __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_possibleConstructorReturn___default()(this, (TableRow.__proto__ || Object.getPrototypeOf(TableRow)).apply(this, arguments));
+    var _this = __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_possibleConstructorReturn___default()(this, (TableRow.__proto__ || Object.getPrototypeOf(TableRow)).call(this, props));
+
+    _this.handleSubmit = _this.handleSubmit.bind(_this);
+    return _this;
   }
 
   __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_createClass___default()(TableRow, [{
+    key: 'handleSubmit',
+    value: function handleSubmit(event) {
+      event.preventDefault();
+
+      var self = this;
+      var uri = 'http://localhost:8000/items/' + this.props.obj.id;
+
+      axios.delete(uri).then(function (res) {
+        __WEBPACK_IMPORTED_MODULE_5_react_router__["browserHistory"].push('/display-item');
+      });
+    }
+  }, {
     key: 'render',
     value: function render() {
       return __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(
@@ -61155,6 +61171,7 @@ var TableRow = function (_Component) {
           __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(
             'form',
             { onSubmit: this.handleSubmit },
+            __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement('input', { name: '_method', type: 'hidden', value: 'DELETE' }),
             __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement('input', { type: 'submit', value: 'Delete', className: 'btn btn-danger' })
           )
         )

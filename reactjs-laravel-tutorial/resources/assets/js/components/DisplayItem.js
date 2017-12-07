@@ -10,22 +10,23 @@ class DisplayItem extends Component {
        super(props);
        this.state = {value: '', items: ''};
      }
-     componentDidMount(){
-       axios.get('http://localhost:8000/items')
-       .then(response => {
-         this.setState({ items: response.data });
-       })
-       .catch(function (error) {
-         console.log(error);
-       })
-     }
-     tabRow(){
+      componentDidMount(){
+        axios.get('http://localhost:8000/items')
+          .then(response => {
+            this.setState({ items: response.data });
+          })
+          .catch(function (error) {
+            console.log(error);
+        })
+      }
+      tabRow(){
        if(this.state.items instanceof Array){
          return this.state.items.map(function(object, i){
-             return <TableRow obj={object} key={i} />;
+              console.log(object);
+              return <TableRow obj={object} key={object.id} />;
          })
        }
-     }
+      }
 
   render(){
     return (
