@@ -59379,7 +59379,7 @@ var DisplayProduct = function (_Component) {
     value: function tabRow() {
       if (this.state.products instanceof Array) {
         return this.state.products.map(function (object, i) {
-          return '<TableRow />';
+          return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__TableRow__["a" /* default */], { obj: object, key: i });
         });
       }
     }
@@ -59539,7 +59539,7 @@ var TableRow = function (_Component) {
   return TableRow;
 }(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
 
-/* unused harmony default export */ var _unused_webpack_default_export = (TableRow);
+/* harmony default export */ __webpack_exports__["a"] = (TableRow);
 
 /***/ }),
 /* 285 */
